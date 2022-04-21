@@ -88,7 +88,7 @@ public class BDao {
 			pstmt.setString(1, bName);
 			pstmt.setString(2, bTitle);
 			pstmt.setString(3, bContent);
-			
+			pstmt.executeUpdate();
 			
 		} catch(Exception e) {
 			e.printStackTrace(); 
@@ -152,8 +152,6 @@ public class BDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		System.out.println(strId);
-		
 		String query = "UPDATE mvc_board SET bName=?, bTitle=?, bContent=? WHERE bId=?";
 		
 		try {
@@ -165,6 +163,7 @@ public class BDao {
 			pstmt.setString(2, bTitle);
 			pstmt.setString(3, bContent);
 			pstmt.setInt(4, Integer.parseInt(strId));
+			pstmt.executeUpdate();
 			
 		} catch(Exception e) {
 			e.printStackTrace(); 
@@ -176,6 +175,34 @@ public class BDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void delete(String strId) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String query = "DELETE FROM mvc_board WHERE bId=?";
+		
+		try {
+			
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement(query);	
+			
+			pstmt.setInt(1, Integer.parseInt(strId));
+			pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace(); 
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 }

@@ -73,7 +73,7 @@ public class BController {
 		
 		model.addAttribute("request", request);
 		
-		command = new BWriteCommand();
+		command = new BDeleteCommand();
 		command.execute(model);
 		
 		return "redirect:list";
